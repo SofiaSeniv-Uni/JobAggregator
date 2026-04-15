@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobScraper.Scraper", "JobScraper.Scraper\JobScraper.Scraper.csproj", "{4E8DF9E1-CCF3-4614-AA94-92DC66DCE25C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobScraper.Contracts", "JobScraper.Contracts\JobScraper.Contracts.csproj", "{1EF59D6E-63A4-40BB-8163-E34F00B84E86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{247DC27C-489E-4D46-86C6-325C21857818}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobScraper.Consumer", "JobScraper.Consumer\JobScraper.Consumer.csproj", "{AAE83F47-E617-4774-8B82-09A97FB7C3D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobScraper.GraphQL", "JobScraper.GraphQL\JobScraper.GraphQL.csproj", "{30C69632-6D1F-4572-8AEC-F38477ABFA21}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E8DF9E1-CCF3-4614-AA94-92DC66DCE25C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E8DF9E1-CCF3-4614-AA94-92DC66DCE25C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E8DF9E1-CCF3-4614-AA94-92DC66DCE25C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E8DF9E1-CCF3-4614-AA94-92DC66DCE25C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EF59D6E-63A4-40BB-8163-E34F00B84E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EF59D6E-63A4-40BB-8163-E34F00B84E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EF59D6E-63A4-40BB-8163-E34F00B84E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EF59D6E-63A4-40BB-8163-E34F00B84E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAE83F47-E617-4774-8B82-09A97FB7C3D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAE83F47-E617-4774-8B82-09A97FB7C3D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAE83F47-E617-4774-8B82-09A97FB7C3D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAE83F47-E617-4774-8B82-09A97FB7C3D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30C69632-6D1F-4572-8AEC-F38477ABFA21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30C69632-6D1F-4572-8AEC-F38477ABFA21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30C69632-6D1F-4572-8AEC-F38477ABFA21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30C69632-6D1F-4572-8AEC-F38477ABFA21}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
