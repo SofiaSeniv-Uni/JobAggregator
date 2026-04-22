@@ -1,0 +1,67 @@
+﻿# docker-compose.yml (мінімум для скрапера)
+services:
+  scraper:
+    build:
+        context: .
+        dockerfile: JobScraper.Scraper/Dockerfile
+    environment:
+      - RabbitMQ__Host=rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  consumer:
+    build:
+        context: .
+        dockerfile: JobScraper.Consumer/Dockerfile
+    environment:
+        - RabbitMQ__Host=rabbitmq
+        - ConnectionStrings__Postgres=Host=host.docker.internal;Port=5432;Database=jobsdb;Username=postgres;Password=postgresql
+    depends_on:
+        rabbitmq:
+          condition: service_healthy
+        postgres:
+          condition: service_healthy 
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"   # Management UI — пункт 2 завдання
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB:       jobsdb
+      POSTGRES_USER:     postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  graphql:
+    build:
+      context: .
+      dockerfile: JobScraper.GraphQL/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ConnectionStrings__Postgres=Host=host.docker.internal;Port=5432;Database=jobsdb;Username=postgres;Password=postgresql
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
