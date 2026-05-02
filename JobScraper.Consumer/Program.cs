@@ -19,10 +19,10 @@ var host = Host.CreateDefaultBuilder(args)
     .Build();
 
 // Авто-міграція при старті — зручно для Docker
-using (var scope = host.Services.CreateScope())
+/*using (var scope = host.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.MigrateAsync();
-}
+}*/
 
 await host.RunAsync();
