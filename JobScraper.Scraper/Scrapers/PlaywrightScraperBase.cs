@@ -11,21 +11,17 @@ public abstract class PlaywrightScraperBase : IJobScraper, IAsyncDisposable
     protected IPage Page { get; private set; } = null!;
 
     public abstract string Source { get; }
-
-    // ????????????? ???????? — ????????? ????? ??????????
     protected async Task InitAsync()
     {
         _playwright = await Playwright.CreateAsync();
         _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
         {
             Headless = true,
-            // ??????? ??? Docker: ??? GPU ?? sandbox
             Args = new[] { "--no-sandbox", "--disable-dev-shm-usage" }
         });
 
         var context = await _browser.NewContextAsync(new BrowserNewContextOptions
         {
-            // ?????????? ??? ?????????? ???????????
             UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
                         "AppleWebKit/537.36 (KHTML, like Gecko) " +
                         "Chrome/120.0.0.0 Safari/537.36",
@@ -34,8 +30,7 @@ public abstract class PlaywrightScraperBase : IJobScraper, IAsyncDisposable
         });
 
         Page = await context.NewPageAsync();
-
-        // ???????? ????? ??????? — ????????? ????????
+        
         await Page.RouteAsync("**/*.{png,jpg,gif,svg,woff,woff2}",
             r => r.AbortAsync());
     }
