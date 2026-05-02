@@ -36,6 +36,7 @@ public sealed class ScraperWorker : BackgroundService
                     _logger.LogInformation("Published: {Title} @ {Company}",
                                      job.Title, job.Company);
                 }
+                _logger.LogInformation("Scraper finished :{Source}", scraper.Source);
             }
 
             // Повторюємо кожні 2 години

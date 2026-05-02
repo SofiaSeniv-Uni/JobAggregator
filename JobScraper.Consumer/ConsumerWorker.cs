@@ -1,4 +1,3 @@
-// ConsumerWorker.cs
 using System.Text;
 using System.Text.Json;
 using JobScraper.Consumer.Data;
@@ -29,7 +28,6 @@ public sealed class ConsumerWorker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        // Retry ??????????? ?? RabbitMQ
         IConnection? connection = null;
         var factory = new ConnectionFactory
         {
@@ -66,8 +64,7 @@ public sealed class ConsumerWorker : BackgroundService
             exclusive: false,
             autoDelete: false,
             cancellationToken: stoppingToken);
-
-        // ????????? ?? 1 ???????????? ?? ???
+        
         await channel.BasicQosAsync(
             prefetchSize: 0,
             prefetchCount: 1,
@@ -86,8 +83,7 @@ public sealed class ConsumerWorker : BackgroundService
                 if (evt is null) throw new InvalidOperationException("Null event");
 
                 await SaveJobAsync(evt, stoppingToken);
-
-                // ACK — ???????????? ??????????? ? ?????
+                
                 await channel.BasicAckAsync(ea.DeliveryTag, false, stoppingToken);
 
                 _logger.LogInformation(
@@ -97,8 +93,7 @@ public sealed class ConsumerWorker : BackgroundService
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Failed to process message: {Body}", body);
-
-                // NACK — ???????????? ???????????? ? ?????
+                
                 await channel.BasicNackAsync(
                     ea.DeliveryTag, false, requeue: true,
                     cancellationToken: stoppingToken);
@@ -107,20 +102,18 @@ public sealed class ConsumerWorker : BackgroundService
 
         await channel.BasicConsumeAsync(
             queue: QueueName,
-            autoAck: false,      // ?????? ACK — ?????????
+            autoAck: false,
             consumer: consumer,
             cancellationToken: stoppingToken);
 
         _logger.LogInformation("Consumer started, waiting for messages...");
-
-        // ???????? worker ?????
+        
         await Task.Delay(Timeout.Infinite, stoppingToken);
     }
 
     private async Task SaveJobAsync(
         JobScrapedEvent evt, CancellationToken ct)
     {
-        // ????? scope ??? ??????? ???????????? — ?????????? lifetime ??? DbContext
         await using var scope = _scopeFactory.CreateAsyncScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
@@ -142,7 +135,6 @@ public sealed class ConsumerWorker : BackgroundService
             Salary = evt.Salary,
             Location = evt.Location,
             IsRemote = evt.IsRemote,
-            Technologies = JsonSerializer.Serialize(evt.Technologies),
             Url = evt.Url,
             Source = evt.Source,
             ScrapedAt = evt.ScrapedAt

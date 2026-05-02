@@ -9,7 +9,6 @@ public class Job
     public string? Salary { get; set; }
     public string Location { get; set; } = null!;
     public bool IsRemote { get; set; }
-    public string Technologies { get; set; } = null!;  // JSON масив
     public string Url { get; set; } = null!;
     public string Source { get; set; } = null!;  // "DOU" | "Djinni"
     public DateTime ScrapedAt { get; set; }

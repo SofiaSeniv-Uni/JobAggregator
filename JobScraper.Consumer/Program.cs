@@ -1,5 +1,4 @@
-﻿// Program.cs
-using JobScraper.Consumer;
+﻿using JobScraper.Consumer;
 using JobScraper.Consumer.Data;
 using Microsoft.EntityFrameworkCore;
 

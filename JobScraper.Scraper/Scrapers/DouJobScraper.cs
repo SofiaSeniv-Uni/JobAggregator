@@ -26,7 +26,7 @@ public sealed class DouJobScraper : PlaywrightScraperBase
             WaitUntil = WaitUntilState.NetworkIdle   // ??????? ?????????? AJAX
         });
 
-        // DOU ??????????? ???????? ??????? "?? ????????" — ????????, ???? ?
+        // DOU ??????????? ???????? ??????? "?? ????????" ï¿½ ????????, ???? ?
         await LoadAllJobsAsync(cancellationToken);
 
         // ????????? ??? ?????? ????????
@@ -69,7 +69,6 @@ public sealed class DouJobScraper : PlaywrightScraperBase
             var companyEl = await card.QuerySelectorAsync(".company");
             var salaryEl = await card.QuerySelectorAsync(".salary");
             var cityEl = await card.QuerySelectorAsync(".cities");
-            var techEls = await card.QuerySelectorAllAsync(".tech-tag");
 
             if (titleEl is null) return null;
 
@@ -82,11 +81,6 @@ public sealed class DouJobScraper : PlaywrightScraperBase
             var city = cityEl is not null
                           ? await cityEl.InnerTextAsync() : "Ukraine";
 
-            var techs = new List<string>();
-            foreach (var el in techEls)
-                techs.Add(await el.InnerTextAsync());
-
-            // ????????? ?????????????? ID ? URL
             var externalId = Convert.ToBase64String(
                 System.Security.Cryptography.SHA256.HashData(
                     System.Text.Encoding.UTF8.GetBytes(url)))[..16];
@@ -99,7 +93,6 @@ public sealed class DouJobScraper : PlaywrightScraperBase
                 Location: city.Trim(),
                 IsRemote: city.Contains("remote",
                                   StringComparison.OrdinalIgnoreCase),
-                Technologies: techs,
                 Url: url,
                 ScrapedAt: DateTime.UtcNow,
                 Source: Source

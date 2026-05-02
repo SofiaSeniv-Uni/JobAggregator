@@ -1,4 +1,3 @@
-// Program.cs
 using JobScraper.Scraper;
 using JobScraper.Scraper.Scrapers;
 using JobScraper.Scraper.Messaging;
@@ -10,7 +9,6 @@ var host = Host.CreateDefaultBuilder(args)
         .WriteTo.Console())
     .ConfigureServices((ctx, services) =>
     {
-        // ?????????? ??? ???????? — ????? ?????? ?????
         services.AddTransient<IJobScraper, DouJobScraper>();
         services.AddTransient<IJobScraper, DjinniJobScraper>();
 
