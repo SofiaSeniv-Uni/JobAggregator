@@ -87,13 +87,8 @@ public sealed class DjinniJobScraper : PlaywrightScraperBase
 			var location = locationEl is not null
 				? (await locationEl.InnerTextAsync()).Trim()
 				: "Ukraine";
-
-			var remoteEl = await card.QuerySelectorAsync(
-				"div.fw-medium span.text-nowrap:first-child");
-			var remoteText = remoteEl is not null
-				? (await remoteEl.InnerTextAsync()).Trim()
-				: "";
-			var isRemote = remoteText.Contains("віддален", StringComparison.OrdinalIgnoreCase)
+			
+			var isRemote = location.Contains("віддален", StringComparison.OrdinalIgnoreCase)
 			               || location.Contains("remote", StringComparison.OrdinalIgnoreCase);
 
 			var externalId = Convert.ToBase64String(
